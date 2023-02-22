@@ -1,5 +1,5 @@
 # Learning Management System
 
-## REACT JS 
-## NODE JS
-## POSTGRES
+## REACT JS - Presentation tier
+## NODE JS - Application tier
+## POSTGRES - Data tier
