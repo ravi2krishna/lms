@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn {
+  @apply rounded-none;
+}
+
+.bar {
+  @apply bg-primary;
+}

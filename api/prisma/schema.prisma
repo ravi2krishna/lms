@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Course {
+  id           Int      @id @default(autoincrement())
+  title        String
+  description  String
+  archived     Boolean  @default(false)
+  modules      Module[]
+  liveLink     String?
+  projectFiles String[]
+  modulesOrder Int[]
+}
+
+model Module {
+  id       Int     @id @default(autoincrement())
+  title    String
+  topics   Topic[]
+  course   Course? @relation(fields: [courseId], references: [id])
+  courseId Int?
+}
+
+model Topic {
+  id              Int      @id @default(autoincrement())
+  title           String
+  modules         Module?  @relation(fields: [modulesId], references: [id])
+  modulesId       Int?
+  assignmentFiles String[]
+  resourceFiles   String[]
+  videoLink       String?
+}
+
+model User {
+  id           Int    @id @default(autoincrement())
+  name         String
+  passwordHash String
+}
