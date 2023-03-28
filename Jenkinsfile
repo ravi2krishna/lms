@@ -6,9 +6,12 @@ pipeline {
             steps {
                 echo 'Building..'
                 sh 'ls'
-                sh 'cd webapp'
-                sh 'npm install'
-                sh 'npm run build'
+                //sh 'cd webapp'
+                dir('webapp') {
+                    sh 'npm install'
+                    sh 'npm run build'
+                }
+                
             }
         }
         stage('Test') {
