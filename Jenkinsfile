@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                sh 'cd webapp'
+                sh 'cd app-name-pipeline/webapp'
                 sh 'npm install'
                 sh 'npm run build'
             }
