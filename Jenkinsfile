@@ -6,6 +6,7 @@ pipeline {
             steps {
                 echo 'Building..'
                 sh 'ls'
+                sh 'cd webapp'
                 sh 'npm install'
                 sh 'npm run build'
             }
