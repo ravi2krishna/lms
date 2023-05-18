@@ -18,7 +18,9 @@ pipeline {
 
         stage('Release LMS') {
             steps {
-                echo 'Deploying....'
+                echo 'Store Artifacts....'
+                sh 'cd webapp && zip dist-1.zip -r dist'
+                sh 'cd webapp && curl -v -u admin:Admin123* --upload-file dist-1.zip http://13.92.5.110:8081/repository/lms/'
             }
         }
 
