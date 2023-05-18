@@ -28,7 +28,7 @@ pipeline {
             steps {
                 echo 'Deploying....'
                 sh 'sudo rm -rf /var/www/html/*'
-                sh 'curl -u admin:Admin123* -X GET '"http://13.92.5.110:8081/repository/lms/dist-1.zip"' --output dist.zip'
+                sh 'curl -u admin:Admin123* -X GET \'http://13.92.5.110:8081/repository/lms/dist-1.zip\' --output dist.zip'
                 sh 'unzip dist.zip && sudo cp -r dist/* /var/www/html/'
             }
         }
