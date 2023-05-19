@@ -19,12 +19,10 @@ pipeline {
         stage('Release LMS') {
             steps {
                 script {
-                   def data = readFile(file: 'webapp/package.json')
-                   println(data)
-                   def versionProps = readJSON text: data
-                   echo "Project version is ${versionProps['version']}"
-
-                   //println(data['version'])
+                   def version = sh(returnStdout: true, script: "npm version")
+                   echo "Version is ${version}"                   
+                   //def data = readFile(file: 'webapp/package.json')
+                   //println(data)
                }
                 echo 'Store Artifacts....'
                 //sh 'cd webapp && zip dist-1.zip -r dist'
