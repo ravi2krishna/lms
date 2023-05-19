@@ -1,10 +1,19 @@
 pipeline {
     agent any
+    environment {
+    //Use Pipeline Utility Steps plugin to read information from pom.xml into env variables
+    // IMAGE = readMavenPom().getArtifactId()
+    // VERSION = readMavenPom().getVersion()
 
+    //Use Pipeline Utility Steps plugin to read information from package.json into env variables
+    packageJSON = readJSON file: 'webapp/package.json'
+    packageJSONVersion = packageJSON.version
+    }
     stages {
         stage('Sonar Analysis') {
             steps {
                 echo 'Testing..'
+                echo "${packageJSONVersion}"  
                 //sh 'cd webapp && sudo docker run  --rm -e SONAR_HOST_URL="http://13.92.5.110:9000" -e SONAR_LOGIN="sqp_cab9202255bd4cf50f3dbba65bb5aaef79ed00fa"  -v ".:/usr/src" sonarsource/sonar-scanner-cli -Dsonar.projectKey=lms'
             }
         }
@@ -25,7 +34,7 @@ pipeline {
                    //def data = readFile(file: 'webapp/package.json')
                    //println(data)
                 echo 'Store Artifacts....'
-                sh 'cd webapp && zip dist-'${packageJSONVersion}'.zip -r dist'
+                //sh 'cd webapp && zip dist-${packageJSONVersion}.zip -r dist'
                 //sh 'cd webapp && curl -v -u admin:Admin123* --upload-file dist-${packageJSONVersion}.zip http://13.92.5.110:8081/repository/lms/'
                }
                 
@@ -35,9 +44,9 @@ pipeline {
         stage('Deploy LMS') {
             steps {
                 echo 'Deploying....'
-                sh 'sudo rm -rf /var/www/html/*'
-                sh 'curl -u admin:Admin123* -X GET \'http://13.92.5.110:8081/repository/lms/dist-${packageJSONVersion}.zip\' --output dist.zip'
-                sh 'unzip dist.zip && sudo cp -r dist/* /var/www/html/'
+                //sh 'sudo rm -rf /var/www/html/*'
+                //sh 'curl -u admin:Admin123* -X GET \'http://13.92.5.110:8081/repository/lms/dist-${packageJSONVersion}.zip\' --output dist.zip'
+                //sh 'unzip dist.zip && sudo cp -r dist/* /var/www/html/'
             }
         }
     }
