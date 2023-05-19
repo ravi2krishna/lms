@@ -17,7 +17,7 @@ pipeline {
         stage('Build LMS') {
             steps {
                 echo 'Building Artifacts..'
-                //sh 'cd webapp && npm install && npm run build'
+                sh 'cd webapp && npm install && npm run build'
             }
         }
 
@@ -27,26 +27,23 @@ pipeline {
                 def packageJSON = readJSON file: 'webapp/package.json'
                 def packageJSONVersion = packageJSON.version
                 echo "${packageJSONVersion}"
-
-                sh "echo '${packageJSONVersion}'"
+                echo 'Store Artifacts....'
+                // sh "echo '${packageJSONVersion}'"
                 sh 'sudo rm -rf webapp/*.zip'
                 sh "zip webapp/dist-'${packageJSONVersion}'.zip -r webapp/dist"
-                sh "ls webapp"
-                sh "curl -v -u admin:Admin123* --upload-file webapp/dist-'${packageJSONVersion}'.zip http://13.92.5.110:8081/repository/lms/"
-                sh 'ls webapp'                  
+                sh "curl -v -u admin:Admin123* --upload-file webapp/dist-'${packageJSONVersion}'.zip http://13.92.5.110:8081/repository/lms/"             
                    //def data = readFile(file: 'webapp/package.json')
                    //println(data)
-                echo 'Store Artifacts....'
                 //sh 'cd webapp && zip dist-${packageJSONVersion}.zip -r dist'
                 //sh 'cd webapp && curl -v -u admin:Admin123* --upload-file dist-${packageJSONVersion}.zip http://13.92.5.110:8081/repository/lms/'
-               }
-                
+               }    
             }
         }
 
         stage('Deploy LMS') {
             steps {
                 echo 'Deploying....'
+                sh "echo '${packageJSONVersion}'"
                 //sh 'sudo rm -rf /var/www/html/*'
                 //sh 'curl -u admin:Admin123* -X GET \'http://13.92.5.110:8081/repository/lms/dist-${packageJSONVersion}.zip\' --output dist.zip'
                 //sh 'unzip dist.zip && sudo cp -r dist/* /var/www/html/'
