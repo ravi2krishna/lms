@@ -6,8 +6,8 @@ pipeline {
     // VERSION = readMavenPom().getVersion()
 
     //Use Pipeline Utility Steps plugin to read information from package.json into env variables
-    packageJSON = readJSON file: 'webapp/package.json'
-    packageJSONVersion = packageJSON.version
+    def packageJSON = readJSON file: 'webapp/package.json'
+    def packageJSONVersion = packageJSON.version
     }
     stages {
         stage('Sonar Analysis') {
