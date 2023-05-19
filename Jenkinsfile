@@ -28,7 +28,7 @@ pipeline {
                 def packageJSONVersion = packageJSON.version
                 echo "${packageJSONVersion}"
 
-                sh 'echo ${packageJSONVersion}'
+                sh "echo '${packageJSONVersion}'"
                 sh 'zip dist-\"${packageJSONVersion}.zip\" -r webapp/dist'
                 sh 'ls webapp'                  
                    //def data = readFile(file: 'webapp/package.json')
