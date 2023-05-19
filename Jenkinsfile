@@ -6,17 +6,6 @@ pipeline {
     // VERSION = readMavenPom().getVersion()
     }
 
-    script {
-                def packageJSON = readJSON file: 'webapp/package.json'
-                def packageJSONVersion = packageJSON.version
-                echo "${packageJSONVersion}"                   
-                   //def data = readFile(file: 'webapp/package.json')
-                   //println(data)
-                echo 'Store Artifacts....'
-                //sh 'cd webapp && zip dist-${packageJSONVersion}.zip -r dist'
-                //sh 'cd webapp && curl -v -u admin:Admin123* --upload-file dist-${packageJSONVersion}.zip http://13.92.5.110:8081/repository/lms/'
-               }
-
     stages {
         stage('Sonar Analysis') {
             steps {
