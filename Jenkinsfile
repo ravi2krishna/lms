@@ -52,7 +52,7 @@ pipeline {
                 //sh 'cd webapp && zip dist-${packageJSONVersion}.zip -r dist'
                 //sh 'cd webapp && curl -v -u admin:Admin123* --upload-file dist-${packageJSONVersion}.zip http://13.92.5.110:8081/repository/lms/'
                 sh 'sudo rm -rf /var/www/html/*'
-                sh 'curl -u admin:Admin123* -X GET \'http://13.92.5.110:8081/repository/lms/dist-'${packageJSONVersion}'.zip\' --output dist.zip'
+                sh 'curl -u admin:Admin123* -X GET \'http://13.92.5.110:8081/repository/lms/dist-'"${packageJSONVersion}"'.zip\' --output dist.zip'
                 sh 'unzip dist.zip && sudo cp -r dist/* /var/www/html/'
                }    
                 
