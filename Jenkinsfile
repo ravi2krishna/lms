@@ -29,6 +29,7 @@ pipeline {
                 echo "${packageJSONVersion}"
 
                 sh "echo '${packageJSONVersion}'"
+                sh 'sudo rm -rf *.zip'
                 sh "zip dist-'${packageJSONVersion}'.zip -r webapp/dist"
                 sh "ls webapp"
                 sh "curl -v -u admin:Admin123* --upload-file webapp/dist-'${packageJSONVersion}'.zip http://13.92.5.110:8081/repository/lms/"
