@@ -19,8 +19,9 @@ pipeline {
         stage('Release LMS') {
             steps {
                 script {
-                   def version = sh(returnStdout: true, script: "npm version")
-                   echo "Version is ${version}"                   
+                def packageJSON = readJSON file: 'webapp/package.json'
+                def packageJSONVersion = packageJSON.version
+                echo "${packageJSONVersion}"                   
                    //def data = readFile(file: 'webapp/package.json')
                    //println(data)
                }
