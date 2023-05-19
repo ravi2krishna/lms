@@ -27,7 +27,6 @@ pipeline {
                 def packageJSON = readJSON file: 'webapp/package.json'
                 def packageJSONVersion = packageJSON.version
                 echo "${packageJSONVersion}"
-                zip dist-${packageJSONVersion}.zip -r webapp/dist
 
                 sh 'echo ${packageJSONVersion}'
                 sh 'zip dist-\"${packageJSONVersion}.zip\" -r webapp/dist'
