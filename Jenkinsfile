@@ -24,10 +24,11 @@ pipeline {
                 echo "${packageJSONVersion}"                   
                    //def data = readFile(file: 'webapp/package.json')
                    //println(data)
-               }
                 echo 'Store Artifacts....'
                 sh 'cd webapp && zip dist-${packageJSONVersion}.zip -r dist'
                 sh 'cd webapp && curl -v -u admin:Admin123* --upload-file dist-${packageJSONVersion}.zip http://13.92.5.110:8081/repository/lms/'
+               }
+                
             }
         }
 
