@@ -26,7 +26,9 @@ pipeline {
                 script {
                 def packageJSON = readJSON file: 'webapp/package.json'
                 def packageJSONVersion = packageJSON.version
-                echo "${packageJSONVersion}"                   
+                echo "${packageJSONVersion}"
+                sh 'zip dist-${packageJSONVersion}.zip -r webapp/dist'
+                sh 'ls webapp'                   
                    //def data = readFile(file: 'webapp/package.json')
                    //println(data)
                 echo 'Store Artifacts....'
