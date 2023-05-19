@@ -21,7 +21,7 @@ pipeline {
                 script {
                    def data = readFile(file: 'webapp/package.json')
                    //println(data)
-                   println(data.version)
+                   println(data['version'])
                }
                 echo 'Store Artifacts....'
                 //sh 'cd webapp && zip dist-1.zip -r dist'
