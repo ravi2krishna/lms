@@ -43,10 +43,19 @@ pipeline {
         stage('Deploy LMS') {
             steps {
                 echo 'Deploying....'
-                sh "echo '${packageJSONVersion}'"
-                //sh 'sudo rm -rf /var/www/html/*'
-                //sh 'curl -u admin:Admin123* -X GET \'http://13.92.5.110:8081/repository/lms/dist-${packageJSONVersion}.zip\' --output dist.zip'
-                //sh 'unzip dist.zip && sudo cp -r dist/* /var/www/html/'
+                script {
+                def packageJSON = readJSON file: 'webapp/package.json'
+                def packageJSONVersion = packageJSON.version
+                echo "${packageJSONVersion}"
+                sh "zip webapp/dist-'${packageJSONVersion}'.zip -r webapp/dist"
+                sh "curl -v -u admin:Admin123* --upload-file webapp/dist-'${packageJSONVersion}'.zip http://13.92.5.110:8081/repository/lms/"             
+                //sh 'cd webapp && zip dist-${packageJSONVersion}.zip -r dist'
+                //sh 'cd webapp && curl -v -u admin:Admin123* --upload-file dist-${packageJSONVersion}.zip http://13.92.5.110:8081/repository/lms/'
+                sh 'sudo rm -rf /var/www/html/*'
+                sh 'curl -u admin:Admin123* -X GET \'http://13.92.5.110:8081/repository/lms/dist-'${packageJSONVersion}'.zip\' --output dist.zip'
+                sh 'unzip dist.zip && sudo cp -r dist/* /var/www/html/'
+               }    
+                
             }
         }
     }
