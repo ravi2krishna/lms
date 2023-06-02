@@ -25,6 +25,8 @@ spec:
               value: production
             - name: DB_HOST
               value: postgres-cluster-ip-service
+            - name: DB_URL
+              value: postgres-cluster-ip-service
             - name: DB_PORT
               value: "5432"
             - name: DB_USER
