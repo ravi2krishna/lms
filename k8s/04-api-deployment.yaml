@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: api
-          image: yellaiahdocker/backend-k8s
+          image: ravi2krishna/lms-k8s-backend
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
