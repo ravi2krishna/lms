@@ -32,7 +32,7 @@ pipeline {
                 // sh 'sudo rm -rf webapp/*.zip'
                 sh "zip webapp/dist-'${packageJSONVersion}'.zip -r webapp/dist"
                 withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD')]) {
-  sh 'curl -v -u $NEXUS_USERNAME:$NEXUS_PASSWORD --upload-file webapp/dist-'${packageJSONVersion}'.zip http://3.22.139.179:8081/repository/lms/'             
+  sh "curl -v -u $NEXUS_USERNAME:$NEXUS_PASSWORD --upload-file webapp/dist-'${packageJSONVersion}'.zip http://3.22.139.179:8081/repository/lms/"             
 }
                 //sh "curl -v -u admin:Admin123* --upload-file webapp/dist-'${packageJSONVersion}'.zip http://3.22.139.179:8081/repository/lms/"             
                    //def data = readFile(file: 'webapp/package.json')
