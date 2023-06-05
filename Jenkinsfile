@@ -29,13 +29,13 @@ pipeline {
                 echo "${packageJSONVersion}"
                 echo 'Store Artifacts....'
                 // sh "echo '${packageJSONVersion}'"
-                sh 'sudo rm -rf webapp/*.zip'
+                // sh 'sudo rm -rf webapp/*.zip'
                 sh "zip webapp/dist-'${packageJSONVersion}'.zip -r webapp/dist"
-                sh "curl -v -u admin:Admin123* --upload-file webapp/dist-'${packageJSONVersion}'.zip http://13.92.5.110:8081/repository/lms/"             
+                sh "curl -v -u admin:Admin123* --upload-file webapp/dist-'${packageJSONVersion}'.zip http://3.22.139.179:8081/repository/lms/"             
                    //def data = readFile(file: 'webapp/package.json')
                    //println(data)
                 //sh 'cd webapp && zip dist-${packageJSONVersion}.zip -r dist'
-                //sh 'cd webapp && curl -v -u admin:Admin123* --upload-file dist-${packageJSONVersion}.zip http://13.92.5.110:8081/repository/lms/'
+                //sh 'cd webapp && curl -v -u admin:Admin123* --upload-file dist-${packageJSONVersion}.zip http://3.22.139.179:8081/repository/lms/'
                }    
             }
         }
@@ -48,9 +48,9 @@ pipeline {
                 def packageJSONVersion = packageJSON.version
                 echo "${packageJSONVersion}"
                 //sh 'cd webapp && zip dist-${packageJSONVersion}.zip -r dist'
-                //sh 'cd webapp && curl -v -u admin:Admin123* --upload-file dist-${packageJSONVersion}.zip http://13.92.5.110:8081/repository/lms/'
+                //sh 'cd webapp && curl -v -u admin:Admin123* --upload-file dist-${packageJSONVersion}.zip http://3.22.139.179:8081/repository/lms/'
                 sh 'sudo rm -rf /var/www/html/*'
-                sh 'curl -u admin:Admin123* -X GET \'http://13.92.5.110:8081/repository/lms/dist-${packageJSONVersion}.zip\' --output dist-'${packageJSONVersion}'.zip'
+                sh 'curl -u admin:Admin123* -X GET \'http://3.22.139.179:8081/repository/lms/dist-${packageJSONVersion}.zip\' --output dist-'${packageJSONVersion}'.zip'
                 sh 'sudo rm -rf dist'
                 sh "sudo unzip -o dist-'${packageJSONVersion}'.zip"
                 sh "sudo cp -r webapp/dist/* /var/www/html/"
