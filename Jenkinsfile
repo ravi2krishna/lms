@@ -21,10 +21,7 @@ pipeline {
                 
                 echo 'Releasing'
                 sh "zip webapp/dist-'${packageJSONVersion}'.zip -r webapp/dist"
-                sh 'ls webapp'
-
-
-
+                sh 'curl -u admin:Admin123* -X GET \'http://18.219.166.107:8081/repository/lms/dist-${packageJSONVersion}.zip\' --output dist-'${packageJSONVersion}'.zip'
                 }
             }
         }
