@@ -18,10 +18,9 @@ pipeline {
 
                 echo 'Building'
                 sh 'cd webapp && npm install && npm run build'
-                sh 'cd webapp && ls dist'
-
+                
                 echo 'Releasing'
-                sh 'cd webapp && zip dist-${packageJSONVersion}.zip -r dist'
+                sh "zip webapp/dist-'${packageJSONVersion}'.zip -r webapp/dist"
                 sh 'ls webapp'
 
 
