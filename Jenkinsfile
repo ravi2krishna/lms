@@ -5,6 +5,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Sonar Analysis'
+                sh 'npm -v'
             }
         }    
 
