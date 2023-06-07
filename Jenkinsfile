@@ -6,7 +6,7 @@ pipeline {
             steps {
                 echo 'Testing..'
                 withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
-                    sh "cd webapp && sudo docker run --rm -e SONAR_HOST_URL='http://3.135.19.45:9000' -e SONAR_LOGIN=$SONAR_TOKEN -v \"\$(pwd):/usr/src\" sonarsource/sonar-scanner-cli -Dsonar.projectKey=lms-app"
+                    //sh "cd webapp && sudo docker run --rm -e SONAR_HOST_URL='http://3.135.19.45:9000' -e SONAR_LOGIN=$SONAR_TOKEN -v \"\$(pwd):/usr/src\" sonarsource/sonar-scanner-cli -Dsonar.projectKey=lms-app"
                 }
             }
         }
@@ -14,7 +14,7 @@ pipeline {
         stage('Build LMS') {
             steps {
                 echo 'Building Artifacts..'
-                sh 'cd webapp && npm install && npm run build'
+                //sh 'cd webapp && npm install && npm run build'
             }
         }
 
@@ -27,7 +27,7 @@ pipeline {
                     echo 'Store Artifacts....'
                     sh "zip webapp/dist-${packageJSONVersion}.zip -r webapp/dist"
                     withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD')]) {
-                        sh 'curl -v -u $NEXUS_USERNAME:'${NEXUS_PASSWORD}' --upload-file webapp/dist-$'{packageJSONVersion}'.zip http://3.135.19.45:8081/repository/lms/'
+                        sh 'curl -v -u $NEXUS_USERNAME:${NEXUS_PASSWORD} --upload-file webapp/dist-$'{packageJSONVersion}'.zip http://3.135.19.45:8081/repository/lms/'
                         //sh "curl -v -u $NEXUS_USERNAME:\"${NEXUS_PASSWORD}\" --upload-file webapp/dist-${packageJSONVersion}.zip http://3.135.19.45:8081/repository/lms/"
                     }
                 }    
