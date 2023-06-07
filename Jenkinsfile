@@ -28,7 +28,7 @@ sh 'cd webapp && sudo docker run  --rm -e SONAR_HOST_URL="http://3.135.19.45:900
                 echo 'Store Artifacts....'
                 sh "zip webapp/dist-'${packageJSONVersion}'.zip -r webapp/dist"
                 withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD')]) {
-  sh "curl -v -u $NEXUS_USERNAME:$NEXUS_PASSWORD --upload-file webapp/dist-'${packageJSONVersion}'.zip http://3.135.19.45:8081/repository/lms/"             
+  sh 'curl -v -u $NEXUS_USERNAME:$NEXUS_PASSWORD --upload-file webapp/dist-'${packageJSONVersion}'.zip http://3.135.19.45:8081/repository/lms/'             
 }
                }    
             }
