@@ -27,8 +27,13 @@ pipeline {
                     echo 'Store Artifacts....'
                     sh "zip webapp/dist-${packageJSONVersion}.zip -r webapp/dist"
                     withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD')]) {
-                        sh 'curl -v -u $NEXUS_USERNAME:$NEXUS_PASSWORD --upload-file webapp/dist-"${packageJSONVersion}".zip http://3.135.19.45:8081/repository/lms/'
+                        sh 'curl -v -u $NEXUS_USERNAME:$NEXUS_PASSWORD --upload-file webapp/dist-${packageJSONVersion}.zip http://3.135.19.45:8081/repository/lms/'
                         //sh "curl -v -u $NEXUS_USERNAME:\"${NEXUS_PASSWORD}\" --upload-file webapp/dist-${packageJSONVersion}.zip http://3.135.19.45:8081/repository/lms/"
+                        
+                        
+                // sh 'curl -u admin:Admin123* -X GET \'http://13.92.5.110:8081/repository/lms/dist-${packageJSONVersion}.zip\' --output dist-'${packageJSONVersion}'.zip'
+
+                        
                     }
                 }    
             }
