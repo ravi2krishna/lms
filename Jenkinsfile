@@ -13,7 +13,7 @@ pipeline {
                 script {
                     def packageJSON = readJSON file: 'webapp/package.json'
                     def packageJSONVersion = packageJSON.version
-                    sh "echo "${packageJSONVersion}'"
+                    sh "echo '${packageJSONVersion}'"
                 }
                 echo 'building..'
                 sh 'cd webapp && npm install && npm run build'
