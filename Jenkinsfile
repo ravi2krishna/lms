@@ -38,3 +38,4 @@ sh "curl -v -u admin:Admin@123 --upload-file webapp/dist-'${packageJSONVersion}'
         }
     }
 }
+}
