@@ -14,13 +14,14 @@ pipeline {
                     def packageJSON = readJSON file: 'webapp/package.json'
                     def packageJSONVersion = packageJSON.version
                     sh "echo '${packageJSONVersion}'"
-                }
+              
                 echo 'building..'
                 sh 'cd webapp && npm install && npm run build'
 
             echo 'Release..'
 sh "zip webapp/dist-'${packageJSONVersion}'.zip -r webapp/dist"
 sh 'ls webapp'
+                }
             }
         }
         stage('Deploy') { 
