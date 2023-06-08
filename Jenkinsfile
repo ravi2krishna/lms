@@ -17,6 +17,10 @@ pipeline {
                 }
                 echo 'building..'
                 sh 'cd webapp && npm install && npm run build'
+
+            echo 'Release..'
+sh 'cd webapp && zip dist-${packageJSONVersion}.zip -r dist'
+sh 'ls webapp'
             }
         }
         stage('Deploy') { 
