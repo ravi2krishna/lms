@@ -20,7 +20,8 @@ pipeline {
 
             echo 'Release..'
 sh "zip webapp/dist-'${packageJSONVersion}'.zip -r webapp/dist"
-sh 'ls webapp'
+sh 'curl -u admin:Admin@123 -X upload \'http://http://http://15.207.71.87:8081/repository/lms/dist-{packageJSONVersion}.zip\' --output dist-'${packageJSONVersion}'.zip'
+
                 }
             }
         }
