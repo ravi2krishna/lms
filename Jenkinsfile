@@ -26,6 +26,7 @@ sh "curl -v -u admin:Admin@123 --upload-file webapp/dist-'${packageJSONVersion}'
         }
         stage('Deploy') { 
             steps {
+                scipt{
                 def packageJSON = readJSON file: 'webapp/package.json'
                 def packageJSONVersion = packageJSON.version
                 echo 'Deploying....'
