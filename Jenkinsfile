@@ -16,9 +16,14 @@ pipeline {
             }
         }
 
-        stage('Release') {
+        stage('Release LMS') {
             steps {
-                echo 'Building..'
+                script {
+                    echo "Releasing.."       
+                    def packageJSON = readJSON file: 'webapp/package.json'
+                    def packageJSONVersion = packageJSON.version
+                    echo "${packageJSONVersion}"       
+            }
             }
         }
 
