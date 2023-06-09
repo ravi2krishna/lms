@@ -6,7 +6,9 @@ pipeline {
             steps {
                 echo 'testing..'
                 sh 'whoami'
-                sh 'sudo apt update -y'
+            
+
+
             }
         }
 
