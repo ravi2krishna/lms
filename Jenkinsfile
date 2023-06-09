@@ -18,6 +18,7 @@ pipeline {
        
         stage('Releaseing') {
             steps {
+                script{
                 echo 'Releasing application to nexus...'
                 def packageJSON = readJSON file: 'webapp/package.json'
                 def packageJSONVersion = packageJSON.version
