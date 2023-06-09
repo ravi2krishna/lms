@@ -16,9 +16,12 @@ pipeline {
             }
         }
        
-        stage('Releaseing') {
+        stage('Releaseing') 
+        {
+
             steps {
-                script{
+                script
+                {
                 echo 'Releasing application to nexus...'
                 def packageJSON = readJSON file: 'webapp/package.json'
                 def packageJSONVersion = packageJSON.version
@@ -28,6 +31,7 @@ pipeline {
                 sh 'sudo rm -rf webapp/*.zip'
                 sh "zip webapp/dist-'${packageJSONVersion}'.zip -r webapp/dist"
                 sh "curl -v -u admin:shree --upload-file webapp/dist-'${packageJSONVersion}'.zip http://52.66.12.85:8081/repository/lms/" 
+                   }   
             }
         }
     }
