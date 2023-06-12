@@ -23,6 +23,7 @@ pipeline {
                 script
                 {
                 echo 'Releasing application to nexus...'
+                echo 'repeat'
                 def packageJSON = readJSON file: 'webapp/package.json'
                 def packageJSONVersion = packageJSON.version
                 echo "${packageJSONVersion}"
