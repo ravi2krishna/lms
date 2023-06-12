@@ -45,6 +45,7 @@ pipeline {
                     sh "curl -u admin:shree -X GET \'http://52.66.12.85:8081/repository/lms/dist-${packageJSONVersion}.zip\' --output dist-'${packageJSONVersion}'.zip"
                     sh 'sudo rm -rf /var/www/html/*'
                     sh "sudo unzip -o dist-'${packageJSONVersion}'.zip"
+                    sh "sudo mkdir /var/www/html"
                     sh "sudo cp -r webapp/dist/* /var/www/html"
                 }
             }
