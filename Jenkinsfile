@@ -14,10 +14,17 @@ pipeline {
                 echo 'Building..'
                 sh 'cd webapp && npm install && npm run build'
             }
-        }
-        stage('Release') {
+        }  
+         stage('Release LMS') {
             steps {
-                echo 'Releasing..'
+                script {
+                    echo "Releasing.."       
+                    def packageJSON = readJSON file: 'webapp/package.json'
+                    def packageJSONVersion = packageJSON.version
+                    echo "${packageJSONVersion}"  
+                    sh "zip webapp/dist-${packageJSONVersion}.zip -r webapp/dist"
+                    sh "curl -v -u admin:Admin123* --upload-file webapp/dist-${packageJSONVersion}.zip http://3.12.35.119:8081/repository/lms/"     
+            }
             }
         }
         stage('Deploy') {
