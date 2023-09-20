@@ -20,8 +20,8 @@ app.use(cors());
 app.use(express.json());
 
 // Routers
-app.use("/api", healthchecksRouter);
-app.use("/api/courses", coursesRouter);
+app.use("/", healthchecksRouter);
+app.use("/courses", coursesRouter);
 
 // Error and 404
 app.use(errorHandler);
