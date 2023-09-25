@@ -1,7 +1,7 @@
 {
   "name": "webapp",
   "private": true,
-  "version": "1.0.1",
+  "version": "5.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "test": "vitest run src",
     "test:watch": "vitest src"
-  },
+   },
   "dependencies": {
     "@headlessui/react": "^1.7.3",
     "@mantine/hooks": "^5.4.0",
