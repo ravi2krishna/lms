@@ -1,0 +1,52 @@
+Jenkins file
+pipeline {
+    agent {
+       label  'docker'
+    }
+
+    environment {
+
+    DOCKERHUB_CREDENTIALS = credentials('mydockeruser')
+     registry = "vamsisqldba2401/8am-lms-be"
+        registrycredential = 'mydockeruser'
+
+    }
+
+    stages {
+
+
+        stage('Building the docker image') {
+            steps {
+                sh 'cd api && docker build -t vamsisqldba2401/8am-lms-be .'
+            }
+        }
+        stage('Logging into dockerhub account') {
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+        stage('pushing the docker image into dockerhub') {
+            steps {
+                sh 'docker push vamsisqldba2401/8am-lms-be'
+            }
+        }
+        stage('Remove old docker images') {
+            steps {
+                sh 'docker rmi -f vamsisqldba2401/8am-lms-be'
+            }
+        }
+        stage('creating database container') {
+            steps {
+                sh 'docker container rm --force lmsdb'
+                sh 'docker run -d -p 5432:5432 --network lmsnetwork -e POSTGRES_PASSWORD=password --name lmsdb postgres'
+            }
+        }
+        stage('Running the docker container') {
+            steps {
+                sh 'docker container rm --force backend'
+                sh 'docker run -d -p 8080:8080 --network lmsnetwork -e DATABASE_URL=postgresql://postgres:password@lmsdb:5432/postgres --name backend -e 
+PORT=8080 -e MODE=local vamsisqldba2401/8am-lms-be'
+            }
+        }
+   }
+}
