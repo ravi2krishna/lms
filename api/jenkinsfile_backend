@@ -1,40 +1,43 @@
 pipeline {
     agent {
-        label 'docker'
+       label  'docker'
     }
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('mydockeruser')
-        registry = "vamsisqldba2401/8am-lms-be"
+    DOCKERHUB_CREDENTIALS = credentials('mydockeruser')
+     registry = "vamsisqldba2401/8am-lms-be"
+        registrycredential = 'mydockeruser'
     }
     stages {
         stage('Building the docker image') {
             steps {
-                script {
-                    def dockerImage = docker.build("vamsisqldba2401/8am-lms-be", "./api")
-                    dockerImage.push()
-                }
+                sh 'cd api && docker build -t vamsisqldba2401/8am-lms-be .'
             }
         }
-        stage('Pushing the docker image into Docker Hub') {
+        stage('Logging into dockerhub account') {
             steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'mydockeruser', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        sh "docker login -u $USERNAME -p $PASSWORD"
-                        sh "docker push vamsisqldba2401/8am-lms-be"
-                    }
-                }
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
-        stage('Database and Backend Containers') {
+        stage('pushing the docker image into dockerhub') {
             steps {
-                sh 'docker rm -f lmsdb || true'
+                sh 'docker push vamsisqldba2401/8am-lms-be'
+            }
+        }
+        stage('Remove old docker images') {
+            steps {
+                sh 'docker rmi -f vamsisqldba2401/8am-lms-be'
+            }
+        }
+        stage('creating database container') {
+            steps {
+                sh 'docker container rm --force lmsdb'
                 sh 'docker run -d -p 5432:5432 --network lmsnetwork -e POSTGRES_PASSWORD=password --name lmsdb postgres'
-                sh 'docker rm -f backend || true'
-                sh '''
-                    docker run -d -p 8080:8080 --network lmsnetwork \
-                    -e DATABASE_URL=postgresql://postgres:password@lmsdb:5432/postgres \
-                    --name backend -e PORT=8080 -e MODE=local vamsisqldba2401/8am-lms-be
-                '''
+            }
+        }
+        stage('Running the docker container') {
+            steps {
+                sh 'docker container rm --force backend'
+                sh 'docker run -d -p 8080:8080 --network lmsnetwork -e DATABASE_URL=postgresql://postgres:password@lmsdb:5432/postgres --name backend -e PORT=8080 -e MODE=local vamsisqldba2401/8am-lms-be'
             }
         }
     }
