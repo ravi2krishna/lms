@@ -1,5 +1,5 @@
 # Docker file for react app created using vite
-FROM node:latest as build
+FROM node as build
 # Create app directory
 WORKDIR /app
 # Install app dependencies
