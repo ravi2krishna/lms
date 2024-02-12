@@ -15,5 +15,17 @@ pipeline {
                 sh'cd webapp && npm install && npm run build'
             }
         }
+
+        stage('Release App') {
+            steps {
+                echo 'Releasing App'     
+                    def packageJSON = readJSON file: 'webapp/package.json'
+                    def packageJSONVersion = packageJSON.version
+                    echo "${packageJSONVersion}"  
+                    sh "zip webapp/dist-${packageJSONVersion}.zip -r webapp/dist"
+                    sh "curl -v -u admin:lms12345 --upload-file webapp/dist-${packageJSONVersion}.zip http://35.94.168.187:8081/repository/lms/"     
+
+            }
+        }
     }
 }
