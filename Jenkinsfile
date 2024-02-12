@@ -9,5 +9,11 @@ pipeline {
             }
         }
 
+        stage('Build App') {
+            steps {
+                echo 'Building App'
+                sh'cd webapp && npm install && npm run build'
+            }
+        }
     }
 }
