@@ -43,6 +43,7 @@ pipeline {
                     sh "sudo cp -r webapp/dist/* /var/www/html"
                 }
             }
-        }
+        
+	}
 	}
 	}
