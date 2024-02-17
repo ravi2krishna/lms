@@ -14,7 +14,7 @@ pipeline {
                 sh'cd webapp && npm install && npm run build'
             }
         }
-        stage('Releasing') {
+        stage ('Release LMS') {
             steps {
                 script {
                     echo 'Releasing App'     
