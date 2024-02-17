@@ -14,6 +14,7 @@ pipeline {
                 sh'cd webapp && npm install && npm run build'
             }
         }
+     stages { 
         stage('Release LMS') {
             steps {
                 script {
@@ -27,4 +28,5 @@ pipeline {
             }
         }I
     } 
+}
 }
