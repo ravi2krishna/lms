@@ -8,6 +8,5 @@ pipeline {
                 sh 'cat /etc/os-release'
             }
         }
-
     }
 }
