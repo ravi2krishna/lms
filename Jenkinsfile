@@ -17,7 +17,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                sh 'sudo docker container ls'
+                sh 'sudo docker image ls'
             }
         }
     }
