@@ -9,5 +9,13 @@ pipeline {
                 echo 'Analysis Completed'
             }
         }
+
+        stage('LMS-Build') {
+            steps {
+                echo 'Building LMS'
+                sh 'cd webapp && npm install && npm run build'
+                echo 'Building Completed'
+            }
+        }
     }
 }
