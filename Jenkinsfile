@@ -2,9 +2,11 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('LMS-Code-Analysis') {
             steps {
-                echo 'Building..'
+                echo 'Sonar Analysis'
+                sh 'sleep 5'
+                echo 'Analysis Completed'
             }
         }
     }
